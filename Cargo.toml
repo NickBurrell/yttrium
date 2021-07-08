@@ -1,5 +1,5 @@
 [package]
-name = "yttrium_sys"
+name = "yttrium"
 version = "0.1.0"
 authors = ["Nicholas Burrell <nicholas.burrell@protonmail.com>"]
 edition = "2018"
@@ -11,6 +11,3 @@ cxx = "1.0"
 
 [build-dependencies]
 cxx-build = "1.0"
-
-[lib]
-crate-type = ["staticlib"]
