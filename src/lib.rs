@@ -1,7 +1,6 @@
-#[cxx::bridge]
-mod ffi {
-    unsafe extern "C++" {
-        include!("Unity/IUnityInterface.h");
-        include!("Unity/IUnityGraphics.h");
-    }
-}
+#![feature(rustc_private)]
+
+mod unity;
+mod plugin;
+mod browser;
+

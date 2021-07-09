@@ -15,13 +15,41 @@ integration of the library into a Unity project.
 
 ### Requirements
 The only hard requirements are the Rust compiler, a C++ compiler,
-and Unity, with the relevant versioning information found below.
+and Unity, with the relevant version information found below.
 
-| Requirement   | Version                        | Comments                   |
-|---------------|--------------------------------|----------------------------|
-| Rust Compiler | 1.53.0                         |                            |
-| C++ Compiler  | Any compiler supporting C++ 17 | For Windows, use MSVC 2019 |
-| Unity         | 2021.3.12f1                    |                            |
+| Requirement   | Version                        | Comments                                 |
+|---------------|--------------------------------|------------------------------------------|
+| Rust Compiler | 1.54.0-nightly                 | This version is tied directly to `servo` |
+| C++ Compiler  | Any compiler supporting C++ 17 | For Windows, use MSVC 2019               |
+| Unity         | 2021.3.12f1                    |                                          |
+
+Take note that our rust version is tied **directly** to `servo`, as it is 
+our primary dependency. We assume you are using `rustup`, and to
+ensure the build succeeds, run the commands found below.
+
+```bash
+$ rustup component add rustc-dev
+``` 
+
+For Windows users, `vcpkg` is also a requirement. Detailed instructions on
+installation can be found [here](https://vcpkg.io/en/getting-started.html),
+but below is a concise guide.
+
+```bash
+$ git clone https://github.com/Microsoft/vcpkg.git
+$ .\vcpkg\bootstrap-vcpkg.bat
+$ .\vcpkg\vcpkg integrate install
+```
+
+After you've installed `vcpkg`, you need to install the `libopenssl`.
+To do this, run the following commands.
+
+```bash
+$ .\vcpkg\vcpkg install openssl-windows:x64-windows
+$ .\vcpkg\vcpkg install openssl:x64-windows-static
+$ .\vcpkg\vcpkg install openssl:x64-windows-static-md
+$ .\vcpkg\vcpkg integrate install
+```
 
 ### Building
 Building Yttrium is a fairly straightforward, and platform agnostic process.

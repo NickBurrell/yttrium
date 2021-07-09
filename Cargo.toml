@@ -4,10 +4,36 @@ version = "0.1.0"
 authors = ["Nicholas Burrell <nicholas.burrell@protonmail.com>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "yttrium"
+path = "src/lib.rs"
+
+[[bin]]
+name = "yttrium_standalone"
+path = "src/bin.rs"
 
 [dependencies]
 cxx = "1.0"
+
+libservo = { git = "https://github.com/servo/servo", features = ["layout-2020"]}
+style = { git = "https://github.com/servo/servo", features = ["servo", "servo-layout-2020"]}
+script = { git = "https://github.com/servo/servo", features = ["debugmozjs"]}
+glutin = "0.27"
+
+gl = "0.14"
+
+mio = { git = "https://github.com/servo/mio.git", branch = "servo-mio-0.6.22" }
+
+winit = { git = "https://github.com/rust-windowing/winit.git", rev = "4192d04a53202c199f94d1b7d883a34c9ad09272" }
+
+deno_core = "0.92"
+
+[patch."https://github.com/jrmuizel/raqote"]
+raqote = { git = "https://github.com/jdm/raqote", branch = "fkup" }
+
+[patch."https://github.com/servo/webrender"]
+webrender = { git = "https://github.com/jdm/webrender", branch = "crash-backtrace" }
+webrender_api = { git = "https://github.com/jdm/webrender", branch = "crash-backtrace" }
 
 [build-dependencies]
 cxx-build = "1.0"

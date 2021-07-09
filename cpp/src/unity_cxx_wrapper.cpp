@@ -1,17 +1,17 @@
-#include "../include/yttrium.h"
+#include "../include/unity_cxx_wrapper.h"
 
 #include <mutex>
 #include <memory>
 
 #include <atomic>
 
-#include "yttrium.h"
+#include "unity_cxx_wrapper.h"
 
-std::shared_ptr<IUnityInterfaces> _unity_interfaces = nullptr;
-std::shared_ptr<IUnityGraphics>   _unity_graphics   = nullptr;
+static std::shared_ptr<IUnityInterfaces> _unity_interfaces = nullptr;
+static std::shared_ptr<IUnityGraphics>   _unity_graphics   = nullptr;
 
-std::mutex _interfaces_mutex = std::mutex();
-std::mutex _graphics_mutex   = std::mutex();
+static std::mutex _interfaces_mutex = std::mutex();
+static std::mutex _graphics_mutex   = std::mutex();
 
 static std::atomic_bool _has_init = false;
 
@@ -22,8 +22,8 @@ namespace detail::init {
         std::lock(_interfaces_mutex, _graphics_mutex);
         _unity_interfaces = std::shared_ptr<IUnityInterfaces>
                 (unity_interfaces);
-        _unity_graphics   = std::shared_ptr<IUnityGraphics>
+        _unity_graphics = std::shared_ptr<IUnityGraphics>
                 (unity_interfaces->Get<IUnityGraphics>());
-
+        //_unity_graphics->RegisterDeviceEventCallback(_graphics_device_callback);
     }
 }
