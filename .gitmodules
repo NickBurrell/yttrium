@@ -1,0 +1,3 @@
+[submodule "extern/servo"]
+	path = extern/servo
+	url = https://github.com/servo/servo
