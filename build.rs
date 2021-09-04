@@ -1,5 +1,5 @@
 fn main() {
-    let _build = cxx_build::bridges(vec!["src/plugin/mod.rs"])
+    let _build = cxx_build::bridges(vec!["src/unity/mod.rs"])
         .flag_if_supported("--std=c++17") /* Clang and G++ flag */
         .flag_if_supported("/std:c++17") /* MSVC Flag */
         .includes(vec!["cpp/lib", "cpp/include"])

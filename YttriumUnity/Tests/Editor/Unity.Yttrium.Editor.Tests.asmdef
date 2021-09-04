@@ -1,0 +1,14 @@
+{
+    "name": "Yttrium.Editor.Tests",
+    "rootNamespace": "Yttrium.Editor.Tests",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

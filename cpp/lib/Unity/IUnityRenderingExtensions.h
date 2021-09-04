@@ -6,6 +6,7 @@
 
 #pragma once
 
+typedef long long intptr_t;
 
 #include "IUnityGraphics.h"
 
