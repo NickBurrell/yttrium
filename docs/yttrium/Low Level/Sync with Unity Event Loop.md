@@ -1,0 +1,1 @@
+Is it worth providing API methods corresponding to Unity's default event loop (i.e. `OnUpdate`, `OnClick`, etc) for easier integration?

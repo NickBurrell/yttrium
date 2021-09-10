@@ -22,6 +22,12 @@ pub struct InterfaceManager {
 }
 
 impl InterfaceManager {
+    pub(crate) fn new(i: *mut ffi::IUnityInterfaces) -> InterfaceManager {
+        InterfaceManager {
+            interfaces: HashMap::new(),
+            inner: i,
+        }
+    }
     pub(crate) fn register<T, I: Interface + Sized + 'static>(
         &mut self,
         instance: *mut T,

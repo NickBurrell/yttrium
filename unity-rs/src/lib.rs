@@ -1,9 +1,29 @@
 use cxx::type_id;
 use cxx::ExternType;
+use ffi::UnityRenderingExtEventType;
+use std::marker::PhantomData;
 
 pub mod graphics;
 pub mod interface;
 pub mod rendering_extensions;
+
+extern "Rust" {
+    fn __unity_rs_entry_point(lib: &mut Unity);
+}
+
+pub struct Unity {
+    _not_send: PhantomData<*const ()>,
+    instances: interface::InterfaceManager,
+}
+
+impl Unity {
+    fn new(interfaces: *mut ffi::IUnityInterfaces) -> Unity {
+        Unity {
+            _not_send: PhantomData,
+            instances: interface::InterfaceManager::new(interfaces),
+        }
+    }
+}
 
 #[cxx::bridge]
 pub(crate) mod ffi {
@@ -324,7 +344,7 @@ pub(crate) mod ffi {
 
 #[repr(transparent)]
 pub struct UnityGraphicsDeviceEventCallback(
-    pub extern "stdcall" fn(event: ffi::UnityRenderingExtEventType),
+    pub extern "stdcall" fn(event: UnityRenderingExtEventType),
 );
 
 unsafe impl ExternType for UnityGraphicsDeviceEventCallback {
@@ -332,7 +352,7 @@ unsafe impl ExternType for UnityGraphicsDeviceEventCallback {
     type Kind = cxx::kind::Trivial;
 }
 
-impl std::convert::Into<i32> for ffi::UnityRenderingExtEventType {
+impl std::convert::Into<i32> for UnityRenderingExtEventType {
     fn into(self) -> i32 {
         use ffi::UnityRenderingExtEventType;
         match self {
@@ -350,5 +370,12 @@ impl std::convert::Into<i32> for ffi::UnityRenderingExtEventType {
             UnityRenderingExtEventType::kUnityRenderingExtEventCount => 11,
             _ => -1,
         }
+    }
+}
+
+pub extern "stdcall" fn UnityPluginLoad(interfaces: *mut ffi::IUnityInterfaces) {
+    let mut lib = Unity::new(interfaces);
+    unsafe {
+        __unity_rs_entry_point(&mut lib);
     }
 }

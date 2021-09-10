@@ -7,8 +7,11 @@
         "id": "44ec8ee00e2a6e92",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "High-Level Design/General Tasks.md",
+            "mode": "source"
+          }
         }
       }
     ],
@@ -65,6 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "High-Level Design/General Tasks.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -83,5 +87,16 @@
     "collapsed": true
   },
   "active": "44ec8ee00e2a6e92",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "High-Level Design/General Tasks.md",
+    "Low Level/Untitled.md",
+    "High-Level Design/Untitled.md",
+    "Untitled.md",
+    "Yttrium/Untitled.md",
+    "High-Level Design/Unity Tasks.md",
+    "High-Level Design/Low Level Tasks.md",
+    "planning/Library Tasks.md",
+    "planning/Rust Planning.md",
+    "planning/Library Planning.md"
+  ]
 }

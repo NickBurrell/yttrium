@@ -1,0 +1,23 @@
+ - [ ] Finish wrapping low-level interfaces
+	- [ ] Graphics
+		- [ ] IUnityRenderingExtensions.h
+		- [ ] IUnityGraphicsD3D11.h
+		- [ ] IUnityGraphicsD3D12.h
+		- [ ] IUnityGraphicsMetal.h
+		- [ ] IUnityGraphicsVulkan.h
+		- [ ] IUnityShaderCompilerAccess.h
+	- [ ] IUnityEventQueue.h
+	- [ ] Profiler
+		- [ ] IUnityProfiler.h
+		- [ ] IUnityProfilerExtensions.h
+ - [ ] Implement idiomatic abstractions
+	- [ ] Graphics
+	- [X] Interface Manager
+	- [ ] Profiler
+- [ ] Implement `unity-rs-derive`
+	- [ ] `#[entry_point]`
+	- [ ] Callback Attributes
+		- [ ] [[Derive Callback Design]]
+		- [ ] `#[rendering_callback(event_id)]`
+		- [ ] `#[event_callback(event_id)]`
+		- [ ] `#[texture_callback()]`

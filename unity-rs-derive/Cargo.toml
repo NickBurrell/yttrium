@@ -12,5 +12,5 @@ path = "src/lib.rs"
 [dependencies]
 unity-rs = {path = "../unity-rs"}
 
-syn = "1.0"
+syn = {version = "0.15", features = ["parsing", "full"] }
 quote = "1.0"
