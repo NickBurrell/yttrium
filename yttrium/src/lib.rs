@@ -1,9 +1,7 @@
 #![feature(box_syntax)]
 #![allow(dead_code)]
 
-mod unity;
 mod runtime;
-mod dotnet;
 
 impl std::convert::Into<i32> for unity::ffi::UnityRenderingExtEventType {
     fn into(self) -> i32 {

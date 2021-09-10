@@ -1,0 +1,42 @@
+extend = "./Makefile.Common.toml"
+
+[tasks.buildall]
+dependencies = ["build_all"]
+
+[tasks.build_all]
+run_task = { name = "build_all", fork = true, cleanup = "build_yttrium_lib" }
+
+[tasks.build_yttrium_lib]
+run_task = [
+    { name = "build_yttrium_windows_msvc", condition = {platforms = ["windows"]}},
+    { name = "build_yttrium_unix"}
+]
+
+[tasks.build_yttrium_windows_msvc]
+env = { "CC" = "clang-cl", "CXX" = "clang-cl"}
+toolchain = "nightly-2021-08-13"
+command = "cargo"
+args = ["build", "--lib"]
+
+[tasks.build_yttrium_unix]
+toolchain = "nightly-2021-08-13"
+command = "cargo"
+args = ["build", "--lib"]
+
+[tasks.build_yttrium_bin]
+run_task = [
+    { name = "build_yttrium_windows_msvc_bin", condition = {platforms = ["windows"]}},
+    { name = "build_yttrium_unix_bin"}
+]
+
+[tasks.build_yttrium_windows_msvc_bin]
+env = { "CC" = "clang-cl", "CXX" = "clang-cl"}
+command = "cargo"
+args = ["build", "--bin", "yttrium_standalone"]
+
+[tasks.build_yttrium_unix_bin]
+command = "cargo"
+args = ["build", "--bin", "yttrium_standalone"]
+
+[tasks.run_suite]
+dependencies = ["format", "build", "test"]
