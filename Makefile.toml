@@ -1,0 +1,59 @@
+extend =  "./Makefile.Common.toml"
+
+[tasks.buildall]
+dependencies = ["build_all"]
+
+[tasks.testall]
+dependencies = ["test_all"]
+
+[tasks.buildall_verbose]
+dependencies = ["build_all_verbose"]
+
+[tasks.testall_verbose]
+dependencies = ["test_all_verbose"]
+
+#[tasks.pre_build]
+#run_task = { name = ["pre_build_phase_1", "pre_build_phase_2"]}
+
+[tasks.pre_build]
+run_task = { name = ["pre_build"]}
+
+[tasks.build_all]
+run_task = { name = ["build_phase_1", "build_phase_2"], fork = true }
+
+[tasks.build_all_verbose]
+run_task = { name = ["build_phase_1_verbose", "build_phase_2_verbose"], fork = true }
+
+[tasks.post_build]
+run_task = { name = ["post_build"]}
+
+#[tasks.post_build]
+#run_task = { name = ["post_build_phase_1", "post_build_phase_2"]}
+
+#[tasks.pre_test]
+#run_task = { name = ["pre_test_phase_1", "pre_test_phase_2"]}
+
+[tasks.pre_test]
+run_task = { name = ["pre_test"]}
+
+[tasks.test_all]
+run_task = { name = ["test_phase_1", "test_phase_2"], fork = true}
+
+[tasks.test_all_verbose]
+run_task = { name = ["test_phase_1_verbose", "test_phase_2_verbose"], fork = true}
+
+[tasks.post_test]
+run_task = { name = ["post_test"]}
+
+#[tasks.post_test]
+#run_task = { name = ["post_test_phase_1", "post_test_phase_2"]}
+
+[tasks.ci_flow]
+dependencies = [
+    "pre_build",
+    "buildall_verbose",
+    "post_build",
+    "pre_test",
+    "testall_verbose",
+    "post_test"
+]

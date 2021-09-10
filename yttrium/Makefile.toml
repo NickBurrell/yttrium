@@ -1,10 +1,50 @@
-extend = "./Makefile.Common.toml"
+extend = "../Makefile.Common.toml"
 
-[tasks.buildall]
-dependencies = ["build_all"]
 
-[tasks.build_all]
-run_task = { name = "build_all", fork = true, cleanup = "build_yttrium_lib" }
+[tasks.pre_build]
+command = "echo"
+args = ["No pre-build tasks for 'yttrium'. Skipping."]
+
+[tasks.build_phase_1]
+command = "echo"
+args = ["Nothing to do for 'yttrium' phase 1. Skipping."]
+
+[tasks.build_phase_2]
+run_task = "build_yttrium_lib"
+
+[tasks.build_phase_1_verbose]
+command = "echo"
+args = ["Nothing to do for 'yttrium' phase 1. Skipping."]
+
+[tasks.build_phase_2_verbose]
+run_task = "build_yttrium_lib_verbose"
+
+[tasks.post_build]
+command = "echo"
+args = ["No post-build tasks for 'yttrium'. Skipping."]
+
+[tasks.pre_test]
+command = "echo"
+args = ["No pre-test tasks for 'yttrium'. Skipping."]
+
+[tasks.test_phase_1]
+command = "echo"
+args = ["Nothing to do for 'yttrium' phase 1. Skipping."]
+
+[tasks.test_phase_2]
+run_task = "test"
+
+[tasks.test_phase_1_verbose]
+command = "echo"
+args = ["Nothing to do for 'yttrium' phase 1. Skipping."]
+
+[tasks.test_phase_2_verbose]
+run_task = "test_verbose"
+
+[tasks.post_test]
+command = "echo"
+args = ["No post-test tasks for 'yttrium'. Skipping."]
+
 
 [tasks.build_yttrium_lib]
 run_task = [
@@ -22,6 +62,25 @@ args = ["build", "--lib"]
 toolchain = "nightly-2021-08-13"
 command = "cargo"
 args = ["build", "--lib"]
+
+
+[tasks.build_yttrium_lib_verbose]
+run_task = [
+    { name = "build_yttrium_windows_msvc_verbose", condition = {platforms = ["windows"]}},
+    { name = "build_yttrium_unix_verbose"}
+]
+
+[tasks.build_yttrium_windows_msvc_verbose]
+env = { "CC" = "clang-cl", "CXX" = "clang-cl"}
+toolchain = "nightly-2021-08-13"
+command = "cargo"
+args = ["build", "--lib", "--verbose"]
+
+[tasks.build_yttrium_unix_verbose]
+toolchain = "nightly-2021-08-13"
+command = "cargo"
+args = ["build", "--lib", "--verbose"]
+
 
 [tasks.build_yttrium_bin]
 run_task = [

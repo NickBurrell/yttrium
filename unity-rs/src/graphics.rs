@@ -2,10 +2,8 @@ use super::interface::Interface;
 use crate::ffi;
 use std::error::Error;
 
-pub type GraphicsCallback = extern "stdcall" fn(UnityGraphicsEvent);
-
 pub struct GraphicsInterface {
-    callbacks: Vec<GraphicsCallback>,
+    callbacks: Vec<ffi::UnityGraphicsDeviceEventCallback>,
     inner: *mut ffi::IUnityGraphics,
 }
 

@@ -12,3 +12,11 @@ command = "cargo"
 args = ["test"]
 dependencies = ["clean"]
 
+[tasks.build_verbose]
+command = "cargo"
+args = ["build", "--verbose", "--all-features"]
+
+[tasks.test_verbose]
+command = "cargo"
+args = ["test", "--verbose", "--all-features"]
+dependencies = ["clean"]

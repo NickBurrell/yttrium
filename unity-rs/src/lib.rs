@@ -1,13 +1,15 @@
+use cxx::type_id;
+use cxx::ExternType;
+
 pub mod graphics;
 pub mod interface;
 pub mod rendering_extensions;
 
 #[cxx::bridge]
-pub mod ffi {
-
+pub(crate) mod ffi {
     #[repr(i32)]
     #[derive(Copy, Clone)]
-    pub enum UnityRenderingExtEventType {
+    pub(crate) enum UnityRenderingExtEventType {
         kUnityRenderingExtEventSetStereoTarget = 0,
         kUnityRenderingExtEventSetStereoEye = 1,
         kUnityRenderingExtEventStereoRenderingDone = 2,
@@ -24,7 +26,7 @@ pub mod ffi {
 
     #[repr(i32)]
     #[derive(Copy, Clone)]
-    pub enum UnityRenderingExtTextureFormat {
+    pub(crate) enum UnityRenderingExtTextureFormat {
         kUnityRenderingExtFormatNone = 0,
 
         // sRGB formats
@@ -215,7 +217,7 @@ pub mod ffi {
 
     #[repr(i32)]
     #[derive(Copy, Clone)]
-    pub enum UnityGfxRenderer {
+    pub(crate) enum UnityGfxRenderer {
         //kUnityGfxRendererOpenGL            =  0, // Legacy OpenGL, removed
         //kUnityGfxRendererD3D9              =  1, // Direct3D 9, removed
         kUnityGfxRendererD3D11 = 2,       // Direct3D 11
@@ -239,7 +241,7 @@ pub mod ffi {
 
     #[repr(i32)]
     #[derive(Copy, Clone)]
-    pub enum UnityGfxDeviceEventType {
+    pub(crate) enum UnityGfxDeviceEventType {
         kUnityGfxDeviceEventInitialize = 0,
         kUnityGfxDeviceEventShutdown = 1,
         kUnityGfxDeviceEventBeforeReset = 2,
@@ -248,27 +250,30 @@ pub mod ffi {
 
     unsafe extern "C++" {
         include!("Unity/IUnityInterface.h");
-        pub type IUnityInterfaces;
-        pub type IUnityInterface;
+        pub(crate) type IUnityInterfaces;
+        pub(crate) type IUnityInterface;
 
         include!("Unity/IUnityGraphics.h");
-        pub type UnityGfxRenderer;
-        pub type UnityGfxDeviceEventType;
+        pub(crate) type IUnityGraphics;
+        pub(crate) type UnityGfxRenderer;
+        pub(crate) type UnityGfxDeviceEventType;
 
         include!("Unity/IUnityRenderingExtensions.h");
-        pub type UnityRenderingExtTextureFormat;
-        pub type UnityRenderingExtEventType;
-        pub type UnityRenderingExtTextureUpdateParamsV2;
+        pub(crate) type UnityRenderingExtTextureFormat;
+        pub(crate) type UnityRenderingExtEventType;
+        pub(crate) type UnityRenderingExtTextureUpdateParamsV2;
 
         include!("unity_cxx_wrapper.h");
 
+        type UnityGraphicsDeviceEventCallback = super::UnityGraphicsDeviceEventCallback;
+
         // IUnityInterface.h wrapper methods
-        pub unsafe fn IUnityInterfaces_GetInterface(
+        pub(crate) unsafe fn IUnityInterfaces_GetInterface(
             interfaces: *const IUnityInterfaces,
             high: u64,
             low: u64,
         ) -> UniquePtr<IUnityInterface>;
-        pub unsafe fn IUnityInterfaces_RegisterInterface(
+        pub(crate) unsafe fn IUnityInterfaces_RegisterInterface(
             interfaces: *const IUnityInterfaces,
             high: u64,
             low: u64,
@@ -276,42 +281,74 @@ pub mod ffi {
         );
 
         // IUnityRenderingExtensions.h wrapper methods
-        pub unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_texData(
+        pub(crate) unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_texData(
             data: *const UnityRenderingExtTextureUpdateParamsV2,
         ) -> *mut u32;
-        pub unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_userData(
+        pub(crate) unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_userData(
             data: *const UnityRenderingExtTextureUpdateParamsV2,
         ) -> u32;
-        pub unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_textureId(
+        pub(crate) unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_textureId(
             data: *const UnityRenderingExtTextureUpdateParamsV2,
         ) -> *const i32;
-        pub unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_format(
+        pub(crate) unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_format(
             data: *const UnityRenderingExtTextureUpdateParamsV2,
         ) -> UnityRenderingExtTextureFormat;
-        pub unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_width(
+        pub(crate) unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_width(
             data: *const UnityRenderingExtTextureUpdateParamsV2,
         ) -> u32;
-        pub unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_height(
+        pub(crate) unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_height(
             data: *const UnityRenderingExtTextureUpdateParamsV2,
         ) -> u32;
-        pub unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_bpp(
+        pub(crate) unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_bpp(
             data: *const UnityRenderingExtTextureUpdateParamsV2,
         ) -> u32;
 
         // IUnityGraphics.h
-        pub unsafe fn IUnityGraphics_GetRenderer(graphics: *const IUnityGraphics)
-            -> UnityGfxRender;
-        pub unsafe fn IUnityGraphics_RegisterDeviceEventCallback(
+        pub(crate) unsafe fn IUnityGraphics_GetRenderer(
             graphics: *const IUnityGraphics,
-            callback: extern "stdcall" fn(UnityGfxDeviceEventType),
-        );
-        pub unsafe fn IUnityGraphics_UnregisterDeviceEventCallback(
+        ) -> UnityGfxRenderer;
+        pub(crate) unsafe fn IUnityGraphics_RegisterDeviceEventCallback(
             graphics: *const IUnityGraphics,
-            callback: extern "stdcall" fn(UnityGfxDeviceEventType),
+            callback: UnityGraphicsDeviceEventCallback,
         );
-        pub unsafe fn IUnityGraphics_ReserveEventIDRange(
+        pub(crate) unsafe fn IUnityGraphics_UnregisterDeviceEventCallback(
+            graphics: *const IUnityGraphics,
+            callback: UnityGraphicsDeviceEventCallback,
+        );
+        pub(crate) unsafe fn IUnityGraphics_ReserveEventIDRange(
             graphics: *const IUnityGraphics,
             count: i32,
         ) -> i32;
+    }
+}
+
+#[repr(transparent)]
+pub struct UnityGraphicsDeviceEventCallback(
+    pub extern "stdcall" fn(event: ffi::UnityRenderingExtEventType),
+);
+
+unsafe impl ExternType for UnityGraphicsDeviceEventCallback {
+    type Id = type_id!("UnityGraphicsDeviceEventCallback");
+    type Kind = cxx::kind::Trivial;
+}
+
+impl std::convert::Into<i32> for ffi::UnityRenderingExtEventType {
+    fn into(self) -> i32 {
+        use ffi::UnityRenderingExtEventType;
+        match self {
+            UnityRenderingExtEventType::kUnityRenderingExtEventSetStereoTarget => 0,
+            UnityRenderingExtEventType::kUnityRenderingExtEventSetStereoEye => 1,
+            UnityRenderingExtEventType::kUnityRenderingExtEventStereoRenderingDone => 2,
+            UnityRenderingExtEventType::kUnityRenderingExtEventBeforeDrawCall => 3,
+            UnityRenderingExtEventType::kUnityRenderingExtEventAfterDrawCall => 4,
+            UnityRenderingExtEventType::kUnityRenderingExtEventCustomGrab => 5,
+            UnityRenderingExtEventType::kUnityRenderingExtEventCustomBlit => 6,
+            UnityRenderingExtEventType::kUnityRenderingExtEventUpdateTextureBegin => 7,
+            UnityRenderingExtEventType::kUnityRenderingExtEventUpdateTextureEnd => 8,
+            UnityRenderingExtEventType::kUnityRenderingExtEventUpdateTextureBeginV2 => 9,
+            UnityRenderingExtEventType::kUnityRenderingExtEventUpdateTextureEndV2 => 10,
+            UnityRenderingExtEventType::kUnityRenderingExtEventCount => 11,
+            _ => -1,
+        }
     }
 }

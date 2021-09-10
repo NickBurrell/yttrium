@@ -8,8 +8,6 @@
 
 #include <atomic>
 
-#include "unity_cxx_wrapper.h"
-
 static std::shared_ptr<IUnityInterfaces> _unity_interfaces = nullptr;
 static std::shared_ptr<IUnityGraphics>   _unity_graphics   = nullptr;
 
@@ -59,4 +57,29 @@ namespace detail::init {
     return ((UnityRenderingExtTextureUpdateParamsV2*)data)->bpp;
 }
 
+[[maybe_unused]] UnityInterfaceGUID UnityInterfaceGUID_new(uint64_t high, uint64_t low) {
+    return UnityInterfaceGUID(high, low);
+}
 
+[[maybe_unused]] std::unique_ptr<IUnityInterface> IUnityInterfaces_GetInterface(const IUnityInterfaces* i, uint64_t h, uint64_t l) {
+    return std::unique_ptr<IUnityInterface>(i->GetInterfaceSplit(h,l));
+}
+
+[[maybe_unused]] void IUnityInterfaces_RegisterInterface(const IUnityInterfaces* i, uint64_t h, uint64_t l, IUnityInterface* r) {
+    return i->RegisterInterfaceSplit(h,l,r);
+}
+
+[[maybe_unused]] UnityGfxRenderer IUnityGraphics_GetRenderer(const IUnityGraphics* g) {
+    return g->GetRenderer();
+}
+
+void IUnityGraphics_RegisterDeviceEventCallback(const IUnityGraphics* g, IUnityGraphicsDeviceEventCallback c) {
+    g->RegisterDeviceEventCallback(c);
+}
+void IUnityGraphics_UnregisterDeviceEventCallback(const IUnityGraphics* g, IUnityGraphicsDeviceEventCallback c) {
+    g->UnregisterDeviceEventCallback(c);
+}
+
+[[maybe_unused]] int32_t IUnityGraphics_ReserveEventIDRange(const IUnityGraphics* g, int32_t c) {
+    return g->ReserveEventIDRange(c);
+}

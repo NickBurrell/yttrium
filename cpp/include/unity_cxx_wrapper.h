@@ -7,9 +7,9 @@
 #include <Unity/IUnityInterface.h>
 #include <Unity/IUnityGraphics.h>
 
-namespace detail::init {
-    void _register_interfaces(IUnityInterfaces *);
-}
+#include <memory>
+
+using UnityGraphicsDeviceEventCallback = IUnityGraphicsDeviceEventCallback;
 
 [[maybe_unused]] uint32_t*                      UnityRenderingExtTextureUpdateParamsV2_get_texData(const UnityRenderingExtTextureUpdateParamsV2*);
 [[maybe_unused]] uint32_t                       UnityRenderingExtTextureUpdateParamsV2_get_userData(const UnityRenderingExtTextureUpdateParamsV2*);
@@ -18,5 +18,15 @@ namespace detail::init {
 [[maybe_unused]] uint32_t                       UnityRenderingExtTextureUpdateParamsV2_get_width(const UnityRenderingExtTextureUpdateParamsV2*);
 [[maybe_unused]] uint32_t                       UnityRenderingExtTextureUpdateParamsV2_get_height(const UnityRenderingExtTextureUpdateParamsV2*);
 [[maybe_unused]] uint32_t                       UnityRenderingExtTextureUpdateParamsV2_get_bpp(const UnityRenderingExtTextureUpdateParamsV2*);
+
+[[maybe_unused]] std::unique_ptr<IUnityInterface>
+IUnityInterfaces_GetInterface(const IUnityInterfaces*, uint64_t, uint64_t);
+[[maybe_unused]] void                           IUnityInterfaces_RegisterInterface(const IUnityInterfaces*, uint64_t, uint64_t, IUnityInterface*);
+
+[[maybe_unused]] UnityGfxRenderer IUnityGraphics_GetRenderer(const IUnityGraphics*);
+[[maybe_unused]] void IUnityGraphics_RegisterDeviceEventCallback(const IUnityGraphics*, IUnityGraphicsDeviceEventCallback);
+[[maybe_unused]] void IUnityGraphics_UnregisterDeviceEventCallback(const IUnityGraphics*, IUnityGraphicsDeviceEventCallback);
+[[maybe_unused]] int32_t IUnityGraphics_ReserveEventIDRange(const IUnityGraphics*, int32_t);
+
 
 #endif //YTTRIUM_UNITY_CXX_WRAPPER_H
