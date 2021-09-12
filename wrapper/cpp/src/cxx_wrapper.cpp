@@ -1,4 +1,4 @@
-#include "../include/unity_cxx_wrapper.h"
+#include "../include/cxx_wrapper.h"
 
 #include <cstdlib>
 #include <cassert>

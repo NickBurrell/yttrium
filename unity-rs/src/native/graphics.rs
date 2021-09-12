@@ -1,5 +1,5 @@
 use super::interface::Interface;
-use crate::ffi;
+use super::ffi;
 use std::error::Error;
 
 pub struct GraphicsInterface {

@@ -16,6 +16,7 @@ pub trait Interface {
         Self: Sized;
 }
 
+#[allow(dead_code)]
 pub struct InterfaceManager {
     interfaces: HashMap<u128, Rc<dyn Interface>>,
     inner: *mut ffi::IUnityInterfaces,
