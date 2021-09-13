@@ -17,18 +17,19 @@ integration of the library into a Unity project.
 The only hard requirements are the Rust compiler, a C++ compiler,
 and Unity, with the relevant version information found below.
 
-| Requirement   | Version                        | Comments                                 |
-|---------------|--------------------------------|------------------------------------------|
-| Rust Compiler | 1.54.0-nightly                 | This version is tied directly to `servo` |
-| C++ Compiler  | Any compiler supporting C++ 17 | For Windows, use MSVC 2019               |
-| Unity         | 2021.3.12f1                    |                                          |
+| Requirement   | Version                        | Comments                                  |
+|---------------|--------------------------------|-------------------------------------------|
+| Rust Compiler | nightly-2021-08-13             | This version is tied directly to `servo`  |
+| C++ Compiler  | Any compiler supporting C++ 17 | For Windows, use MSVC 2019                |
+| Unity         | 2021.3.12f1                    | Current version of Unity used for testing |
 
 Take note that our rust version is tied **directly** to `servo`, as it is 
 our primary dependency. We assume you are using `rustup`, and to
 ensure the build succeeds, run the commands found below.
 
 ```bash
-$ rustup component add rustc-dev
+$ rustup component add rustc-dev # Required for `libservo`
+$ rustup component add llvm-tools-preview # Required for `cxx` and `libservo`
 ``` 
 
 For Windows users, `vcpkg` is also a requirement. Detailed instructions on
@@ -51,13 +52,23 @@ $ .\vcpkg\vcpkg install openssl:x64-windows-static-md
 $ .\vcpkg\vcpkg integrate install
 ```
 
+After installing necessary libraries through your native package manager or `vcpkg`, there are several more tools and
+libraries that need to be set up. The steps required are outlined [here](https://github.com/servo/servo#macos).
+
 ### Building
 Building Yttrium is a fairly straightforward, and platform agnostic process.
-The build process is outlined below.
-```bash
-$ mkdir build/ && cd build
-$ cmake ..
-$ make -j4
+The process requires `cargo-make`, which can be installed as follows.
+
+```shell
+$ cargo install --force cargo-make
+```
+
+Once installed, there are several `make` targets of interest, namely `buildall`, `testall`, and `ci-flow`, which you can 
+read more about in `Makefile.toml`. These commands are ran as follows.
+```shell
+$ cargo make buildall --no-workspace
+$ cargo make testall --no-workspace
+$ cargo make ci-flow --no-workspace
 ```
 
 After building, add the library file (depending on platform it could be

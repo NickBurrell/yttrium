@@ -1,0 +1,33 @@
+on: [push, pull_request]
+name: Build & Run All
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Package Installation
+        run: |
+          sudo apt-get -y install git curl autoconf libx11-dev libfreetype6-dev libgl1-mesa-dri \
+              libglib2.0-dev xorg-dev gperf g++ build-essential cmake libssl-dev \
+              liblzma-dev libxmu6 libxmu-dev \
+              libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev \
+              libgles2-mesa-dev libegl1-mesa-dev libdbus-1-dev libharfbuzz-dev ccache \
+              clang libunwind-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
+              libgstreamer-plugins-bad1.0-dev autoconf2.13 llvm-dev gstreamer1.0-nice gstraemer1.0-plugins-bad
+      - name: Toolchain Setup
+        uses: actions-rs.toolchain@v1
+        with:
+          toolchain: nightly-2021-08-13
+          override: true
+          components: rustfmt, rustc-dev, llvm-tools-preview
+      - name: Install `cargo-make`
+        uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: --debug cargo-make
+      - name: Run CI Flow
+        uses: actions-rs/cargo@v1
+        with:
+          command: make
+          args: ci-flow --no-workspace
