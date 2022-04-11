@@ -1,4 +1,4 @@
-use std::convert::{From};
+use std::convert::From;
 use std::ptr::NonNull;
 
 use super::ffi;

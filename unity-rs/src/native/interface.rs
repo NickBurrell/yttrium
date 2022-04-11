@@ -3,8 +3,15 @@ use std::rc::Rc;
 
 use super::ffi;
 
-pub trait Interface {
-    fn new<T>(instance: *mut T) -> Result<Self, Box<dyn std::error::Error>>
+pub unsafe trait NativeInterface {}
+
+unsafe impl NativeInterface for ffi::IUnityInterface {}
+
+unsafe impl<T: NativeInterface> NativeInterface for *const T {}
+unsafe impl<T: NativeInterface> NativeInterface for *mut T {}
+
+pub trait Interface<I: NativeInterface + ?Sized> {
+    fn new(instance: *mut I) -> Result<Self, Box<dyn std::error::Error>>
     where
         Self: Sized;
 
@@ -18,7 +25,7 @@ pub trait Interface {
 
 #[allow(dead_code)]
 pub struct InterfaceManager {
-    interfaces: HashMap<u128, Rc<dyn Interface>>,
+    interfaces: HashMap<u128, Rc<dyn Interface<dyn NativeInterface>>>,
     inner: *mut ffi::IUnityInterfaces,
 }
 
@@ -29,7 +36,7 @@ impl InterfaceManager {
             inner: i,
         }
     }
-    pub(crate) fn register<T, I: Interface + Sized + 'static>(
+    pub(crate) fn register<T, I: Interface<dyn NativeInterface> + Sized + 'static>(
         &mut self,
         instance: *mut T,
     ) -> Result<(), InterfaceError> {
@@ -44,9 +51,9 @@ impl InterfaceManager {
         }
     }
 
-    pub(crate) fn get<T, I: Interface + Sized + 'static>(
+    pub(crate) fn get<T, I: Interface<dyn NativeInterface> + Sized + 'static>(
         &mut self,
-    ) -> Result<&Rc<dyn Interface>, InterfaceError> {
+    ) -> Result<&Rc<dyn Interface<dyn NativeInterface>>, InterfaceError> {
         if self.interfaces.contains_key(&I::uuid()) {
             Ok(self.interfaces.get(&I::uuid()).unwrap())
         } else {
@@ -57,9 +64,9 @@ impl InterfaceManager {
         }
     }
 
-    pub(crate) fn get_mut<'a, T, I: Interface + Sized + 'static>(
+    pub(crate) fn get_mut<'a, T, I: Interface<dyn NativeInterface> + Sized + 'static>(
         &'a mut self,
-    ) -> Result<&'a mut Rc<dyn Interface>, InterfaceError> {
+    ) -> Result<&'a mut Rc<dyn Interface<dyn NativeInterface>>, InterfaceError> {
         if self.interfaces.contains_key(&I::uuid()) {
             Ok(self.interfaces.get_mut(&I::uuid()).unwrap())
         } else {
@@ -72,11 +79,13 @@ impl InterfaceManager {
 }
 
 impl InterfaceManager {
-    pub(super) fn load<T, I: Interface + Sized + 'static>(&mut self) -> Result<(), InterfaceError> {
+    pub(super) fn load<T, I: Interface<dyn NativeInterface> + Sized + 'static>(
+        &mut self,
+    ) -> Result<(), InterfaceError> {
         let (high, low) = split(I::uuid());
         let ptr = unsafe { ffi::IUnityInterfaces_GetInterface(self.inner, high, low) };
         if !ptr.is_null() {
-            match I::new(ptr.into_raw() as *mut T) {
+            match I::new(ptr.into_raw() as *mut _) {
                 Ok(i) => {
                     // We can be assured that if this method is called, there will be no collision on interface IDs
                     let interface = Rc::new(i);

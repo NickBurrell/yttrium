@@ -1,0 +1,54 @@
+{
+  "recentFiles": [
+    {
+      "basename": "Graphics",
+      "path": "Low Level/Graphics.md"
+    },
+    {
+      "basename": "Interface Manager",
+      "path": "Low Level/Interface Manager.md"
+    },
+    {
+      "basename": "Profiler",
+      "path": "Low Level/Profiler.md"
+    },
+    {
+      "basename": "Sync with Unity Event Loop",
+      "path": "Low Level/Sync with Unity Event Loop.md"
+    },
+    {
+      "basename": "Rust FFI",
+      "path": "Misc/Rust FFI.md"
+    },
+    {
+      "basename": "Ownership Model",
+      "path": "Yttrium/Ownership Model.md"
+    },
+    {
+      "basename": "Blog Post 1 Draft",
+      "path": "Drafts/Blog Post 1 Draft.md"
+    },
+    {
+      "basename": "General Tasks",
+      "path": "High-Level Design/General Tasks.md"
+    },
+    {
+      "basename": "Event Queue",
+      "path": "Low Level/Event Queue.md"
+    },
+    {
+      "basename": "Derive Callback Design",
+      "path": "Low Level/Derive Callback Design.md"
+    },
+    {
+      "basename": "Low Level Tasks",
+      "path": "High-Level Design/Low Level Tasks.md"
+    },
+    {
+      "basename": "Day Planner-20211206",
+      "path": "Day Planners/Day Planner-20211206.md"
+    }
+  ],
+  "omittedPaths": [],
+  "maxLength": null
+}

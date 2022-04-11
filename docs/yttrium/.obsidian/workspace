@@ -1,16 +1,16 @@
 {
   "main": {
-    "id": "08270e8ec44a1377",
+    "id": "930e921605ac98dc",
     "type": "split",
     "children": [
       {
-        "id": "44ec8ee00e2a6e92",
+        "id": "4830c3a2872f8c1f",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "High-Level Design/General Tasks.md",
-            "mode": "source"
+            "file": "Low Level/Graphics.md",
+            "mode": "preview"
           }
         }
       }
@@ -47,6 +47,14 @@
                 "sortOrder": "alphabetical"
               }
             }
+          },
+          {
+            "id": "54a2d624216e4e60",
+            "type": "leaf",
+            "state": {
+              "type": "recent-files",
+              "state": {}
+            }
           }
         ]
       }
@@ -68,35 +76,59 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "High-Level Design/General Tasks.md",
+                "file": "Low Level/Graphics.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
+                "unlinkedCollapsed": false
               }
             }
+          },
+          {
+            "id": "9f33575220e22cc4",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          },
+          {
+            "id": "03a5eb811c9d6eab",
+            "type": "leaf",
+            "state": {
+              "type": "todo",
+              "state": {}
+            }
+          },
+          {
+            "id": "8664cf3e60057ab3",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
-  "active": "44ec8ee00e2a6e92",
+  "active": "4830c3a2872f8c1f",
   "lastOpenFiles": [
+    "Low Level/Graphics.md",
+    "Low Level/Interface Manager.md",
+    "Low Level/Profiler.md",
+    "Low Level/Sync with Unity Event Loop.md",
+    "Misc/Rust FFI.md",
+    "Yttrium/Ownership Model.md",
+    "Drafts/Blog Post 1 Draft.md",
     "High-Level Design/General Tasks.md",
-    "Low Level/Untitled.md",
-    "High-Level Design/Untitled.md",
-    "Untitled.md",
-    "Yttrium/Untitled.md",
-    "High-Level Design/Unity Tasks.md",
-    "High-Level Design/Low Level Tasks.md",
-    "planning/Library Tasks.md",
-    "planning/Rust Planning.md",
-    "planning/Library Planning.md"
+    "Low Level/Event Queue.md",
+    "Low Level/Derive Callback Design.md"
   ]
 }

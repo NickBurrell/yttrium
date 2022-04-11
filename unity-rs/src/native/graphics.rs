@@ -1,14 +1,16 @@
-use super::interface::Interface;
 use super::ffi;
+use super::interface::{Interface, NativeInterface};
 use std::error::Error;
+
+unsafe impl NativeInterface for ffi::IUnityGraphics {}
 
 pub struct GraphicsInterface {
     callbacks: Vec<ffi::UnityGraphicsDeviceEventCallback>,
     inner: *mut ffi::IUnityGraphics,
 }
 
-impl Interface for GraphicsInterface {
-    fn new<T>(instance: *mut T) -> Result<Self, Box<dyn Error>>
+impl Interface<ffi::IUnityGraphics> for GraphicsInterface {
+    fn new(instance: *mut ffi::IUnityGraphics) -> Result<Self, Box<dyn Error>>
     where
         Self: Sized,
     {

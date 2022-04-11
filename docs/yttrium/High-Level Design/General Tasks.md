@@ -11,3 +11,7 @@
  - [ ] Continuous Integration
 	 - [ ] [[Rust CI]]
 	 - [ ] [[Unity CI]]
+ - [ ] Subprojects
+	 - [ ] [[Low Level Tasks]]
+	 - [ ] [[Unity Tasks]]
+	 - [ ] [[Yttrium Tasks]]

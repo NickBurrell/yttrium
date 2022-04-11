@@ -1,4 +1,3 @@
-
 use cxx::type_id;
 use cxx::ExternType;
 use ffi::UnityRenderingExtEventType;
@@ -287,11 +286,11 @@ pub(crate) mod ffi {
         pub(crate) type UnityRenderingExtEventType;
         pub(crate) type UnityRenderingExtTextureUpdateParamsV2;
 
-        include!("cxx_wrapper.h");
+        include!("unity_shim.h");
 
         type UnityGraphicsDeviceEventCallback = super::UnityGraphicsDeviceEventCallback;
 
-        // IUnityInterface.h wrapper methods
+        // IUnityInterface.h ffi methods
         pub(crate) unsafe fn IUnityInterfaces_GetInterface(
             interfaces: *const IUnityInterfaces,
             high: u64,
@@ -304,7 +303,7 @@ pub(crate) mod ffi {
             interface: *mut IUnityInterface,
         );
 
-        // IUnityRenderingExtensions.h wrapper methods
+        // IUnityRenderingExtensions.h ffi methods
         pub(crate) unsafe fn UnityRenderingExtTextureUpdateParamsV2_get_texData(
             data: *const UnityRenderingExtTextureUpdateParamsV2,
         ) -> *mut u32;
@@ -354,9 +353,7 @@ pub struct UnityGraphicsDeviceEventCallback(
 
 #[cfg(not(target_os = "windows"))]
 #[repr(transparent)]
-pub struct UnityGraphicsDeviceEventCallback(
-    pub extern "C" fn(event: UnityRenderingExtEventType),
-);
+pub struct UnityGraphicsDeviceEventCallback(pub extern "C" fn(event: UnityRenderingExtEventType));
 
 unsafe impl ExternType for UnityGraphicsDeviceEventCallback {
     type Id = type_id!("UnityGraphicsDeviceEventCallback");
@@ -391,7 +388,6 @@ pub extern "stdcall" fn UnityPluginLoad(interfaces: *mut ffi::IUnityInterfaces) 
         __unity_rs_entry_point(&mut lib);
     }
 }
-
 
 #[cfg(not(target_os = "windows"))]
 #[allow(non_snake_case)]

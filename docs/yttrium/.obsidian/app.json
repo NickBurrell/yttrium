@@ -1,1 +1,9 @@
-{}
+{
+  "tabSize": 4,
+  "vimMode": true,
+  "spellcheck": true,
+  "spellcheckDictionary": [
+    "getter",
+    "natively"
+  ]
+}
