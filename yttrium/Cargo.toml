@@ -16,7 +16,11 @@ generational-arena = "0.2"
 threadbound = "0.1"
 poison = "0.1.0"
 
-libservo = {git = "https://github.com/servo/servo", features = ["layout-2013", "media-gstreamer"], rev = "74f1eb199e67e82ff713f77f7803f02a25966628"}
+# , rev = "74f1eb199e67e82ff713f77f7803f02a25966628"
+# features = ["layout-2021", "media-gstreamer"]
+libservo = { git = "https://github.com/servo/servo", features = [ "layout-2020" ], rev = "d8e886a792b0d3c90fca9f7d99209d3e373f73da" }
+
+style = { git = "https://github.com/servo/servo", features = [ "servo", "servo-layout-2020" ], rev = "d8e886a792b0d3c90fca9f7d99209d3e373f73da" }
 
 glutin = "0.25"
 surfman = { version = "0.3", features = ["sm-angle-default"]}
@@ -25,7 +29,11 @@ gleam = "0.12"
 
 gl = "0.14"
 
-mio = { git = "https://github.com/servo/mio.git", branch = "servo-mio-0.6.22" }
+# This is here to dedupe winapi since mio 0.6 is still using winapi 0.2. 
+mio = { git = "https://github.com/servo/mio.git", branch = "servo-mio-0.6.22" } 
+
+# https://github.com/rust-lang/backtrace-rs/pull/363/ 
+backtrace = { git = "https://github.com/servo/backtrace-rs", branch = "uwp-fix" } 
 
 winit = { git = "https://github.com/rust-windowing/winit.git", rev = "4192d04a53202c199f94d1b7d883a34c9ad09272" }
 
