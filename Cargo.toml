@@ -1,6 +1,6 @@
 [workspace]
 members = [
-    "unity-rs",
+    "unity-rs-sys",
     "unity-rs-derive",
     "dotnet-ffi",
     "yttrium"

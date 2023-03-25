@@ -10,7 +10,7 @@ proc-macro = true
 path = "src/lib.rs"
 
 [dependencies]
-unity-rs = {path = "../unity-rs"}
+unity-rs-sys = {path = "../unity-rs-sys" }
 
 syn = {version = "0.15", features = ["parsing", "full"] }
 quote = "1.0"

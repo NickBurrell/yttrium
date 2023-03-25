@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-unity-rs = { path = "../unity-rs"}
+unity-rs-sys = { path = "../unity-rs-sys" }
 
 num-traits = "0.2"
 num-derive = "0.2"
