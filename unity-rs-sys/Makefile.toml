@@ -1,0 +1,52 @@
+extend = "../Makefile.Common.toml"
+
+[tasks.pre_build]
+command = "echo"
+args = ["No pre-build tasks for 'unity-rs'. Skipping."]
+
+[tasks.build_phase_1]
+run_task = "build"
+
+[tasks.build_phase_2]
+command = "echo"
+args = ["Nothing to do for 'unity-rs' phase 2. Skipping."]
+
+[tasks.build_phase_1_verbose]
+run_task = "build_verbose"
+
+[tasks.build_phase_2_verbose]
+command = "echo"
+args = ["Nothing to do for 'unity-rs' phase 2. Skipping."]
+
+[tasks.post_build]
+command = "echo"
+args = ["No post-build tasks for 'unity-rs'. Skipping."]
+
+[tasks.pre_test]
+command = "echo"
+args = ["No pre-test tasks for 'unity-rs'. Skipping."]
+
+[tasks.test_phase_1]
+run_task = "test"
+
+[tasks.test_phase_2]
+command = "echo"
+args = ["Nothing to do for 'unity-rs' phase 2. Skipping."]
+
+[tasks.test_phase_1_verbose]
+run_task = "test_verbose"
+
+[tasks.test_phase_2_verbose]
+command = "echo"
+args = ["Nothing to do for 'unity-rs' phase 2. Skipping."]
+
+[tasks.post_test]
+command = "echo"
+args = ["No post-test tasks for 'unity-rs'. Skipping."]
+
+[tasks.unity_rs_flow]
+dependencies = [
+    "format",
+    "build",
+    "test"
+]

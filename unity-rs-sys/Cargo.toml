@@ -1,0 +1,46 @@
+[package]
+name = "unity-rs-sys"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+
+default = ["dx12"]
+
+dx11   = ["win32"]
+dx12   = ["win32", "dep:d3d12"]
+gl     = []
+#metal  = ["macos"]
+vulkan = []
+
+win32 = ["dep:winapi"]
+linux = []
+#macos = ["dep:metal"]
+
+[dependencies]
+cxx = "1.0"
+libc = "0.2"
+
+image = "0.24"
+
+# Windows Specific
+d3d12 = { version = "0.4", optional = true }
+
+# macOS
+# metal = { version = "0.23", optional = true }
+
+# Linux
+
+thiserror = "1.0"
+
+lazy_static = "1.4"
+
+[build-dependencies]
+cxx-build = "1.0"
+
+[dependencies.winapi]
+version = "0.3"
+features = ["dxgi1_2","dxgi1_3","dxgi1_4","dxgi1_5","dxgi1_6","dxgidebug","d3d12","d3d12sdklayers","d3dcommon","d3dcompiler","dxgiformat","synchapi","winerror"]
+optional = true
